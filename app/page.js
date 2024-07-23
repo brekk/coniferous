@@ -4,12 +4,35 @@ import Image from "next/image";
 import { useState } from "react";
 import styles from "./home.scss";
 import Grid from "./grid";
+import FormField from "./form-field";
 
 const PaymentFlow = ({ total }) => {
+  const bem = blem("PaymentFlow");
   // by convention stateful values are prefixed with a $
   const [$step, $setStep] = useState(0);
-  const bem = blem("PaymentFlow");
-
+  const [$formData, $setFormData] = useState({});
+  const goForward = () => {
+    const next = ($step + 1) % steps.length;
+    console.log("moving forward!", next);
+    $setStep(next);
+  };
+  const goBack = () => {
+    const prev = (step - 1) % steps.length;
+    console.log("moving forward!", prev);
+    $setStep(prev);
+  };
+  const dataForField = (field) => $formData[field] || "";
+  const updateForField = (field) => (event) => {
+    $setFormData({
+      ...$formData,
+      [field]: event?.target?.value ?? "",
+    });
+  };
+  const formDataProps = (id) => ({
+    id,
+    value: dataForField(id),
+    onUpdate: updateForField(id),
+  });
   const steps = [
     <div className={bem("step", "summary")}>
       <h1 className={bem("greeting")}>Hi, Taylor</h1>
@@ -22,9 +45,29 @@ const PaymentFlow = ({ total }) => {
           <span className={bem("label", "total-due")}>Total due</span>
           <span className={bem("amount", "due")}>${total}</span>
         </div>
-        <button className={bem("button", "pay")}>Pay total</button>
+        <button className={bem("button", "pay")} onClick={goForward}>
+          Pay total
+        </button>
       </div>
       <Grid />
+    </div>,
+    <div className={bem("form-wrapper")}>
+      <h2 className={bem("form-heading")}>
+        <span className={bem("form-step", "1")}>1</span>
+        Payment information
+      </h2>
+      <div className={bem("form")}>
+        <FormField label="Card number" {...formDataProps("credit-card")} />
+        <div className={bem("across", ["two"])}>
+          <FormField label="Expires (MM/YY)" {...formDataProps("expiration")} />
+          <FormField label="Security Code (CVV)" {...formDataProps("cvv")} />
+        </div>
+        <FormField label="Name on card" {...formDataProps("name")} />
+        <FormField label="ZIP code" {...formDataProps("zip")} />
+        <button className={bem("button", "continue")} onClick={goForward}>
+          Continue
+        </button>
+      </div>
     </div>,
   ];
   return <section className={bem("steps")}>{steps[$step] || null}</section>;
