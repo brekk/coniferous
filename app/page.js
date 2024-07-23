@@ -1,95 +1,50 @@
+"use client";
+import blem from "blem";
 import Image from "next/image";
-import styles from "./page.module.css";
+import { useState } from "react";
+import styles from "./home.scss";
+import Grid from "./grid";
+
+const PaymentFlow = ({ total }) => {
+  // by convention stateful values are prefixed with a $
+  const [$step, $setStep] = useState(0);
+  const bem = blem("PaymentFlow");
+
+  const steps = [
+    <div className={bem("step", "summary")}>
+      <h1 className={bem("greeting")}>Hi, Taylor</h1>
+      <p className={bem("summary")}>
+        You have 6 medical bills ready from ABC Health System. You can pay your
+        bills here or verify your identity to view full bill details.
+      </p>
+      <div className={bem("cta", "start")}>
+        <div className={bem("cta-summary")}>
+          <span className={bem("label", "total-due")}>Total due</span>
+          <span className={bem("amount", "due")}>${total}</span>
+        </div>
+        <button className={bem("button", "pay")}>Pay total</button>
+      </div>
+      <Grid />
+    </div>,
+  ];
+  return <section className={bem("steps")}>{steps[$step] || null}</section>;
+};
 
 export default function Home() {
+  const bem = blem("Home");
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
+    <main className={bem("")}>
+      <header className={bem("header")}>
         <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
+          className={bem("logo")}
+          src="/logo.svg"
+          alt="ABC Health System"
+          width={158}
+          height={80}
           priority
         />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      </header>
+      <PaymentFlow total={"600.00"} />
     </main>
   );
 }

@@ -1,0 +1,24 @@
+.Grid {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: block;
+  &__line {
+    height: 100vh;
+    width: 1rem;
+    border-left: 1px dashed lime;
+    position: absolute;
+    top: 0;
+    &--768 {
+      left: 768px;
+      &::before {
+        content: "768px";
+        position: absolute;
+        display: inline-block;
+        transform: rotate(-90deg);
+        bottom: 2rem;
+        margin-left: -1rem;
+      }
+    }
+  }
+}
