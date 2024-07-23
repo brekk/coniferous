@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 import styles from "./home.scss";
 import Grid from "./grid";
-import FormField from "./form-field";
+import Form from "./form";
+import Button from "./button";
 
 const PaymentFlow = ({ total }) => {
   const bem = blem("PaymentFlow");
@@ -45,30 +46,13 @@ const PaymentFlow = ({ total }) => {
           <span className={bem("label", "total-due")}>Total due</span>
           <span className={bem("amount", "due")}>${total}</span>
         </div>
-        <button className={bem("button", "pay")} onClick={goForward}>
+        <Button className="pay" onClick={goForward}>
           Pay total
-        </button>
+        </Button>
       </div>
       <Grid />
     </div>,
-    <div className={bem("form-wrapper")}>
-      <h2 className={bem("form-heading")}>
-        <span className={bem("form-step", "1")}>1</span>
-        Payment information
-      </h2>
-      <div className={bem("form")}>
-        <FormField label="Card number" {...formDataProps("credit-card")} />
-        <div className={bem("across", ["two"])}>
-          <FormField label="Expires (MM/YY)" {...formDataProps("expiration")} />
-          <FormField label="Security Code (CVV)" {...formDataProps("cvv")} />
-        </div>
-        <FormField label="Name on card" {...formDataProps("name")} />
-        <FormField label="ZIP code" {...formDataProps("zip")} />
-        <button className={bem("button", "continue")} onClick={goForward}>
-          Continue
-        </button>
-      </div>
-    </div>,
+    <Form formDataProps={formDataProps} goForward={goForward} />,
   ];
   return <section className={bem("steps")}>{steps[$step] || null}</section>;
 };
