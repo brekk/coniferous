@@ -4,6 +4,8 @@
 .Form {
   &__form-wrapper {
     background: white;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid $color-offwhite;
   }
   &__form {
     width: calc(100% - 4rem);
@@ -26,10 +28,15 @@
     height: 2rem;
     margin: 0;
     padding: 1rem 2rem;
+    &--active {
+color: black;
+    }
+    &--inactive {
+      color: $color-offblack;
+      background-color: white;
+    }
   }
   &__form-step {
-    background: $color-blue;
-    color: white;
     font-weight: bold;
     font-size: 1rem;
     border-radius: 100%;
@@ -42,7 +49,16 @@
     vertical-align: center;
     align-items: center;
     justify-content: center;
+&--active {
+    color: white;
+    background: $color-blue;
   }
+  &--inactive {
+    color: $color-offgray;
+    background: $color-offwhite;
+  }
+  }
+
   &__across {
     display: flex;
     flex-direction: row;
