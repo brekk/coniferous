@@ -32,7 +32,7 @@
       color: black;
     }
     &--inactive {
-      color: $color-offblack;
+      color: $color-dark;
       background-color: white;
     }
   }
@@ -54,7 +54,7 @@
       background: $color-blue;
     }
     &--inactive {
-      color: $color-offgray;
+      color: $color-gray;
       background: $color-offwhite;
     }
   }

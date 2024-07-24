@@ -52,7 +52,7 @@
       background: $color-blue;
     }
     &--inactive {
-      color: $color-offgray;
+      color: $color-gray;
       background: $color-offwhite;
     }
   }
@@ -93,7 +93,7 @@
   }
   &__payment-method-header {
     margin-bottom: 0.25rem;
-    color: $color-darkgray;
+    color: $color-lightgray;
   }
   &__card {
     margin-right: 0.875rem;

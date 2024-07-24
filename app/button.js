@@ -6,12 +6,9 @@ export const Button = ({ className = "", onClick, children, disabled }) => {
   const classes = [className, disabled ? "disabled" : ""].filter(
     (z) => z !== "",
   );
+  const cName = classes.length === 0 ? "Button" : bem("", classes);
   return (
-    <button
-      className={`Button ${bem("", classes)}`}
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <button className={cName} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );
