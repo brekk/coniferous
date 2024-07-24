@@ -8,6 +8,7 @@ import Grid from "./grid";
 import Form from "./form";
 import Button from "./button";
 import Review from "./review-and-pay";
+import Summary from "./summary";
 
 import { dropNonDigits } from "./fn/string";
 import { nonEmptyFields } from "./fn/form";
@@ -18,7 +19,7 @@ import {
   formatZip,
 } from "./fn/formatters";
 
-export const PaymentFlow = ({ total }) => {
+export const PaymentFlow = ({ total, user, totalBills }) => {
   const bem = blem("PaymentFlow");
   // by convention stateful values are prefixed with a $
   const [$step, $setStep] = useState(0);
@@ -75,23 +76,12 @@ export const PaymentFlow = ({ total }) => {
     error: "This field is required.",
   });
   const steps = [
-    <div className={bem("step", "summary")}>
-      <h1 className={bem("greeting")}>Hi, Taylor</h1>
-      <p className={bem("summary")}>
-        You have 6 medical bills ready from ABC Health System. You can pay your
-        bills here or verify your identity to view full bill details.
-      </p>
-      <div className={bem("cta", "start")}>
-        <div className={bem("cta-summary")}>
-          <span className={bem("label", "total-due")}>Total due</span>
-          <span className={bem("amount", "due")}>${total}</span>
-        </div>
-        <Button className="pay" onClick={goForward}>
-          Pay total
-        </Button>
-      </div>
-      <Grid />
-    </div>,
+    <Summary
+      goForward={goForward}
+      user={user}
+      total={total}
+      totalBills={totalBills}
+    />,
     <Form
       formDataProps={formDataProps}
       goForward={goForward}
@@ -103,7 +93,7 @@ export const PaymentFlow = ({ total }) => {
       goBack={goBack}
       total={total}
     />,
-    <div className={bem("paid")}>Thank you for your payment!</div>,
+    <div className={"Summary__paid"}>Thank you for your payment!</div>,
   ];
   return <section className={bem("steps")}>{steps[$step] || null}</section>;
 };

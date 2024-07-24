@@ -17,7 +17,7 @@ export default function Home() {
           priority
         />
       </header>
-      <PaymentFlow total={"600.00"} />
+      <PaymentFlow total={"600.00"} user="Taylor" totalBills={6} />
     </main>
   );
 }
