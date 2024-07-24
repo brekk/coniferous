@@ -6,6 +6,12 @@
   flex-direction: column;
   width: 100%;
   margin-bottom: 1rem;
+  position: relative;
+  &__icon {
+    position: absolute;
+    right: 0.5rem;
+    top: 2.5rem;
+  }
   &__label {
     @include fontArial;
     color: $color-offgray;
@@ -24,9 +30,11 @@
     &--error,
     &--error:focus-visible {
       outline: 1px solid $color-red;
+       
     }
   }
-  &__error {
+  
+  &__error-text {
     display: flex;
     // display: none;
     margin-top: 0.5rem;

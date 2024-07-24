@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import blem from "blem";
 import { useState, useEffect } from "react";
 import "./form-field.scss";
@@ -17,13 +18,14 @@ export const FormField = (props) => {
   //  }
   //}, [$value]);
   const invalid = $touched && !isValid;
+  const errorClass = invalid ? "error" : "";
   return (
-    <div className={bem()}>
+    <div className={bem("", errorClass)}>
       <label htmlFor={id} className={bem("label")}>
         {label}
       </label>
       <input
-        className={bem("input", invalid ? "error" : "")}
+        className={bem("input", errorClass)}
         type="text"
         onBlur={() => $setTouched(true)}
         onChange={(e) => {
@@ -32,7 +34,18 @@ export const FormField = (props) => {
         }}
         defaultValue={value}
       />
-      <span className={bem("error", [invalid ? "active" : "inactive"])}>
+      {$touched && (
+        <span className={bem("icon")}>
+          <Image
+            src={`/icon-${invalid ? "alert" : "check"}.svg`}
+            alt={invalid ? "Error" : "Success"}
+            width={24}
+            height={24}
+            priority
+          />
+        </span>
+      )}
+      <span className={bem("error-text", [invalid ? "active" : "inactive"])}>
         {error}
       </span>
     </div>
