@@ -15,7 +15,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  &__greeting {
+  &__greeting, &__paid {
     @include fontGeorgia;
     font-size: 1.75rem;
     line-height: 2.25rem;

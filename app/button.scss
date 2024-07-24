@@ -1,4 +1,5 @@
 @import "./styles/colors";
+@import "./styles/fonts";
 
 .Button {
   cursor: pointer;
@@ -9,6 +10,9 @@
   color: white;
   border-radius: 0.75rem;
   border: 0;
+  @include fontArial;
+  font-weight: 700;
+  font-size: 1rem;
   &--pay {
     max-width: 23.5rem;
   }

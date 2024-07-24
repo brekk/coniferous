@@ -6,6 +6,7 @@ import styles from "./home.scss";
 import Grid from "./grid";
 import Form from "./form";
 import Button from "./button";
+import Review from "./review-and-pay";
 
 const PaymentFlow = ({ total }) => {
   const bem = blem("PaymentFlow");
@@ -29,7 +30,7 @@ const PaymentFlow = ({ total }) => {
     $setStep(next);
   };
   const goBack = () => {
-    const prev = (step - 1) % steps.length;
+    const prev = ($step - 1) % steps.length;
     console.log("moving forward!", prev);
     $setStep(prev);
   };
@@ -89,6 +90,13 @@ const PaymentFlow = ({ total }) => {
       goForward={goForward}
       checkValid={() => !Object.values($validData).some((y) => !y)}
     />,
+    <Review
+      formDataProps={formDataProps}
+      goForward={goForward}
+      goBack={goBack}
+      total={total}
+    />,
+    <div className={bem("paid")}>Thank you for your payment!</div>,
   ];
   return <section className={bem("steps")}>{steps[$step] || null}</section>;
 };

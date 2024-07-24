@@ -1,0 +1,101 @@
+@import "./styles/colors";
+@import "./styles/fonts";
+
+.Review{
+  &__edit-payment {
+    @include fontArial;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    position: absolute;
+    right: 1.25rem;
+    color: $color-blue;
+  }
+  // TODO: consolidate this
+  &__form-heading {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    @include fontArial;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    width: calc(100% - 4rem);
+    height: 2rem;
+    margin: 0;
+    padding: 1rem 2rem;
+    position: relative;
+    &--active {
+      color: black;
+    }
+    &--inactive {
+      // color: $color-offblack;
+      background-color: white;
+    }
+  }
+  &__form-step {
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 100%;
+    width: 1rem;
+    height: 1rem;
+    padding: 0.25rem;
+    display: flex;
+    text-align: center;
+    margin-right: 1rem;
+    vertical-align: center;
+    align-items: center;
+    justify-content: center;
+    &--active {
+      color: white;
+      background: $color-blue;
+    }
+    &--inactive {
+      color: $color-offgray;
+      background: $color-offwhite;
+    }
+  }
+  &__review-and-pay {
+    background-color: white;
+    border-top: 1px solid $color-offwhite;
+    border-bottom: 1px solid $color-offwhite;
+  }
+  &__summary {
+    width: calc(100% - 4rem);
+    padding: 0 2rem;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  &__summary-text {
+    @include fontArial;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    text-align: left;
+  }
+  &__payment-details {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    @include fontArial;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  &__payment-method {
+    display: flex;
+    flex-direction: column;
+  }
+  &__payment-method-header {
+    margin-bottom: 0.25rem;
+    color: $color-darkgray;
+  }
+  &__card {
+    margin-right: 0.875rem;
+  }
+}
