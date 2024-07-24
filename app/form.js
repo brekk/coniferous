@@ -7,7 +7,7 @@ export const Form = ({ checkValid, formDataProps, goForward }) => {
   const isValid = checkValid();
   const bem = blem("Form");
   return (
-    <>
+    <div className={bem("")}>
       <div className={bem("form-wrapper")}>
         <h2 className={bem("form-heading", "active")}>
           <span className={bem("form-step", "active")}>1</span>
@@ -42,7 +42,7 @@ export const Form = ({ checkValid, formDataProps, goForward }) => {
           Review and pay
         </h2>
       </div>
-    </>
+    </div>
   );
 };
 

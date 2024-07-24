@@ -2,10 +2,12 @@
 @import "./styles/fonts";
 
 .Summary {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  &__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   &__greeting,
   &__paid {
     @include fontGeorgia;
@@ -24,6 +26,7 @@
     width: calc(100% - 2rem);
     padding: 1rem;
     margin: 0;
+    max-width: 23.5rem;
   }
   &__cta {
     width: calc(100% - 4rem);

@@ -2,10 +2,25 @@
 @import "./styles/fonts";
 
 .Form {
-  &__form-wrapper {
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: 67.5rem) {
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  &__form-wrapper, &__review-and-pay {
     background: white;
     padding-bottom: 2rem;
     border-bottom: 1px solid $color-offwhite;
+    // transition: width 0.3s ease-out;
+    width: 100%;
+    @media screen and (min-width: 67.5rem) {
+      max-width: 36rem;
+    }
+  }
+  &__review-and-pay {
+    padding-bottom: 1rem;
   }
   &__form {
     width: calc(100% - 4rem);

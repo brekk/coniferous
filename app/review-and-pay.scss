@@ -1,7 +1,20 @@
 @import "./styles/colors";
 @import "./styles/fonts";
 
-.Review{
+.Review {
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: 67.5rem) {
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  &__form-wrapper {
+    width: 100%;
+    @media screen and (min-width: 67.5rem) {
+      width: 36rem;
+    }
+  }
   &__edit-payment {
     @include fontArial;
     font-weight: 700;
@@ -12,7 +25,6 @@
     color: $color-blue;
     cursor: pointer;
   }
-  // TODO: consolidate this
   &__form-heading {
     align-self: flex-start;
     display: flex;
@@ -61,6 +73,10 @@
     background-color: white;
     border-top: 1px solid $color-offwhite;
     border-bottom: 1px solid $color-offwhite;
+ width: 100%;
+    @media screen and (min-width: 67.5rem) {
+      width: 36rem;
+    }
   }
   &__summary {
     width: calc(100% - 4rem);

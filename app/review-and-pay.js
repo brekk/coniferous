@@ -7,7 +7,7 @@ export const Review = ({ formDataProps, goBack, goForward, total }) => {
   const bem = blem("Review");
   const lastFour = formDataProps("creditCard").value.slice(-4);
   return (
-    <>
+    <div className={bem("")}>
       <div className={bem("form-wrapper")}>
         <h2 className={bem("form-heading", "inactive")}>
           <span className={bem("form-step", "inactive")}>1</span>
@@ -47,7 +47,7 @@ export const Review = ({ formDataProps, goBack, goForward, total }) => {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
