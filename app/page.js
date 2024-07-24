@@ -8,6 +8,8 @@ import Form from "./form";
 import Button from "./button";
 import Review from "./review-and-pay";
 
+const dropNonDigits = (x) => x.replace(/\D/, "");
+
 const PaymentFlow = ({ total }) => {
   const bem = blem("PaymentFlow");
   // by convention stateful values are prefixed with a $
@@ -35,16 +37,69 @@ const PaymentFlow = ({ total }) => {
     $setStep(prev);
   };
   const dataForField = (field) => $formData[field] || "";
-  const updateForField = (field) => (event) => {
-    const value = event?.target?.value ?? "";
-    $setFormData({
-      ...$formData,
-      [field]: value,
-    });
+  const formatters = {
+    creditCard: (field, value, ref) => {
+      const regex = /^(\d{0,4})(\d{0,4})(\d{0,4})(\d{0,4})$/g;
+      // (4 x 4) + 3 spaces === 19
+      const onlyNumbers = ref.current.value.slice(0, 19).replace(/[^\d]/g, "");
+
+      const formatted = onlyNumbers.replace(regex, (regex, $1, $2, $3, $4) =>
+        [$1, $2, $3, $4].filter((group) => !!group).join(" "),
+      );
+      ref.current.value = formatted;
+      const storedValue = dropNonDigits(ref.current.value);
+      $setFormData({
+        ...$formData,
+        [field]: storedValue,
+      });
+    },
+    expiration: (field, value, ref) => {
+      const regex = /^(\d{0,2})(\d{0,2})$/g;
+      const numbersAndSlashes = ref.current.value
+        .slice(0, 5)
+        .replace(/[^\d\/]/g, "");
+      const formatted = numbersAndSlashes.replace(regex, (_, a, b) =>
+        [a, b].filter((z) => z).join("/"),
+      );
+      ref.current.value = formatted;
+      $setFormData({
+        ...$formData,
+        [field]: value,
+      });
+    },
+    cvv: (field, value, ref) => {
+      const regex = /\D/g;
+      const set = ref.current.value.slice(0, 3).replace(/[^\d]/g, "");
+      ref.current.value = set.replace(regex, "");
+      $setFormData({
+        ...$formData,
+        [field]: value,
+      });
+    },
+    zip: (field, value, ref) => {
+      const regex = /\D/g;
+      const set = ref.current.value.slice(0, 5).replace(/[^\d]/g, "");
+      ref.current.value = set.replace(regex, "");
+      $setFormData({
+        ...$formData,
+        [field]: value,
+      });
+    },
+  };
+  const updateForField = (field) => (event, ref) => {
+    let value = event?.target?.value ?? "";
+    const formatter = formatters[field] || false;
+    if (formatter) {
+      formatter(field, value, ref);
+    } else {
+      $setFormData({
+        ...$formData,
+        [field]: value,
+      });
+    }
   };
   useEffect(() => {
     const validated = getValidDataFromFormData();
-    console.log("VALIDATED?", validated);
     $setValidData(validated);
   }, [$formData]);
   const formDataProps = (id) => ({
@@ -52,19 +107,6 @@ const PaymentFlow = ({ total }) => {
     value: dataForField(id),
     onChange: updateForField(id),
     isValid: $validData[id],
-    // this is redundant currently but if we were to make
-    // this more robust in the future, we'd be able to leverage this
-    /*
-    validate: (e) => {
-      const valid = e?.target?.value !== "";
-      if (!valid) {
-        $setValidData({
-          ...$validData,
-          [id]: false,
-        });
-      }
-    },
-    */
     error: "This field is required.",
   });
   const steps = [
