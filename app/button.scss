@@ -12,4 +12,9 @@
   &--pay {
     max-width: 23.5rem;
   }
+  &--disabled {
+    background-color: $color-offgray; 
+    color: #ddd;
+    cursor: not-allowed;
+  }
 }

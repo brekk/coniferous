@@ -1,7 +1,7 @@
 "use client";
 import blem from "blem";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./home.scss";
 import Grid from "./grid";
 import Form from "./form";
@@ -11,7 +11,18 @@ const PaymentFlow = ({ total }) => {
   const bem = blem("PaymentFlow");
   // by convention stateful values are prefixed with a $
   const [$step, $setStep] = useState(0);
-  const [$formData, $setFormData] = useState({});
+  const [$formData, $setFormData] = useState({
+    creditCard: "",
+    expiration: "",
+    cvv: "",
+    name: "",
+    zip: "",
+  });
+  const getValidDataFromFormData = () =>
+    Object.fromEntries(
+      Object.entries($formData).map(([k, v]) => [k, v !== ""]),
+    );
+  const [$validData, $setValidData] = useState(getValidDataFromFormData());
   const goForward = () => {
     const next = ($step + 1) % steps.length;
     console.log("moving forward!", next);
@@ -24,15 +35,36 @@ const PaymentFlow = ({ total }) => {
   };
   const dataForField = (field) => $formData[field] || "";
   const updateForField = (field) => (event) => {
+    const value = event?.target?.value ?? "";
     $setFormData({
       ...$formData,
-      [field]: event?.target?.value ?? "",
+      [field]: value,
     });
   };
+  useEffect(() => {
+    const validated = getValidDataFromFormData();
+    console.log("VALIDATED?", validated);
+    $setValidData(validated);
+  }, [$formData]);
   const formDataProps = (id) => ({
     id,
     value: dataForField(id),
-    onUpdate: updateForField(id),
+    onChange: updateForField(id),
+    isValid: $validData[id],
+    // this is redundant currently but if we were to make
+    // this more robust in the future, we'd be able to leverage this
+    /*
+    validate: (e) => {
+      const valid = e?.target?.value !== "";
+      if (!valid) {
+        $setValidData({
+          ...$validData,
+          [id]: false,
+        });
+      }
+    },
+    */
+    error: "This field is required.",
   });
   const steps = [
     <div className={bem("step", "summary")}>
@@ -52,7 +84,11 @@ const PaymentFlow = ({ total }) => {
       </div>
       <Grid />
     </div>,
-    <Form formDataProps={formDataProps} goForward={goForward} />,
+    <Form
+      formDataProps={formDataProps}
+      goForward={goForward}
+      checkValid={() => !Object.values($validData).some((y) => !y)}
+    />,
   ];
   return <section className={bem("steps")}>{steps[$step] || null}</section>;
 };
